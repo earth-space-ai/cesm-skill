@@ -33,7 +33,7 @@ tags:
 > Skill author: Koutian Wu (ktwu01@gmail.com)
 > Skill version: 0.1.0-scaffold
 
-**What CESM does:** Couples atmosphere (CAM), land (CTSM), ocean (MOM6 or POP2), sea ice (CICE), land ice (CISM), waves (WW3), and runoff (MOSART/RTM/mizuRoute) components into one configurable Earth-system model. Components communicate through the CMEPS NUOPC mediator. CESM has been a primary contributor to CMIP since CMIP3 and underlies many of the Working Group science campaigns at NCAR.
+**What CESM does:** Couples atmosphere (CAM), land (CTSM), ocean (POP2 in CESM2, MOM6 in CESM3), sea ice (CICE), land ice (CISM), waves (WW3), and runoff (MOSART/RTM/mizuRoute) components into one configurable Earth-system model. Components communicate through a coupler/mediator: **CPL7 (MCT-based)** in CESM2.x, **CMEPS (NUOPC-based)** from CESM2.2+ and CESM3. CESM has been a primary contributor to CMIP since CMIP3 and underlies many of the Working Group science campaigns at NCAR.
 
 **Who this skill is for:** Agents, students, and researchers who need to download, build, configure, run, customize, debug, and contribute to CESM as a coupled system. For deep work in any single component, route into the component-specific skill.
 
@@ -93,8 +93,8 @@ This repo is a **superproject**. The actual model code for each component is fet
 
 ## Critical Rules
 
-1. **Never edit the `main` branch directly.** CESM uses release branches and feature branches, with strict tagging conventions managed by CSEG. Use `release-cesm2.x.y` or `cesm3_x_y` branches.
-2. **Always run `bin/git-fleximod update` after cloning** (or the older `manage_externals/checkout_externals` for older tags). Without this you have an empty `components/` tree.
+1. **Pin to a tag, not a branch.** For reproducible work, check out a tag (e.g., `cesm2.1.5`, `cesm2.2.2`), not the tip of a release branch. Tip-of-branch can be unstable between tags.
+2. **Fetch externals after cloning, or you have an empty `components/` tree.** Use `bin/git-fleximod update` for CESM3 / current alpha. Use `manage_externals/checkout_externals` for CESM2.x release tags. Pick the tool that matches your tag, do not mix.
 3. **Use cime tools, not bare Makefiles.** Cases are created and built through `create_newcase`, `case.setup`, `case.build`, `case.submit`, not by invoking compilers directly.
 4. **A "compset" is the science configuration. A "grid" is the resolution. A "case" is one instance.** Internalize this vocabulary.
 5. **CESM is large.** A full `B1850` case (fully coupled, pre-industrial) needs serious HPC. For development, start with `X` (data atmosphere/land/ocean) or `F` (CAM + CLM, prescribed SST) compsets.
@@ -115,6 +115,17 @@ This repo is a **superproject**. The actual model code for each component is fet
 
 ---
 
+## Critical agent gotchas
+
+These are common ways an autonomous agent fails on a fresh CESM case. Verified through Gemini critique pass on 2026-05-09.
+
+- **`xmlchange` is the workflow.** To change run length, project, walltime, PE counts, etc., agents must call `./xmlchange STOP_N=5,STOP_OPTION=ndays,JOB_QUEUE=...` from the case dir. Editing `env_*.xml` by hand is fragile.
+- **Namelist customization goes in `user_nl_<comp>` files.** Direct edits to `atm_in`, `lnd_in`, etc., are overwritten by `case.setup` / `preview_namelists`. Put your changes in `user_nl_cam`, `user_nl_clm`, `user_nl_cice`, etc., in the case directory.
+- **Input data must be present before `case.submit`.** Run `./check_input_data --download` after `case.setup` to fetch the (potentially terabytes of) forcing data into `$DIN_LOC_ROOT`.
+- **Machine port required if not on a known cluster.** Out-of-the-box machine support: Derecho, Casper, Cheyenne (legacy), and a small set of community machines listed in `ccs_config/machines/`. Other systems require porting via `config_machines.xml` and `config_compilers.xml`.
+- **Tag, not branch.** See critical rules above.
+- **CESM2 vs CESM3:** the file `ccs_config/` is a CESM3 layout; CESM2 keeps configuration under `cime/config/cesm/`. The coupler differs (CPL7/MCT for CESM2.x, CMEPS/NUOPC for CESM3 and 2.2+). Verify your tag's layout before assuming paths.
+
 ## Status
 
-This skill is at **scaffold** depth. The structure, repo layout, vocabulary, and routing are verified against the cloned source tree. Per-section operational depth (specific namelist values, machine-port quirks, common compset gotchas) is being filled in iteratively. See `TODO.md` for the open items.
+This skill is at **scaffold** depth (v0.1.0-scaffold). Routing, repo layout, vocabulary, and the critical-rules + agent-gotchas sections have been pass-reviewed by Gemini against current ESCOMP/CESM source. Per-section operational depth (specific namelist values, machine-port quirks, common compset gotchas) is being filled in iteratively. See `TODO.md`.
