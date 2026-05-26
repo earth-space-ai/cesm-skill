@@ -48,6 +48,34 @@ Progressive disclosure:
 - [waccm-skill](https://github.com/earth-space-ai/waccm-skill), whole-atmosphere variant
 - [waccmx-skill](https://github.com/earth-space-ai/waccmx-skill), extended whole-atmosphere variant
 
+## Acknowledgments
+
+**Gold-standard references for CESM** (use these to cross-check anything in this skill):
+- ESCOMP/CESM repository: https://github.com/ESCOMP/CESM
+- CESM Quickstart: https://escomp.github.io/CESM/release-cesm2/
+- CESM2 description paper: Danabasoglu et al. 2020, JAMES, doi:10.1029/2019MS001916
+- CIME documentation (case control system): https://esmci.github.io/cime/
+
+This scaffold exists only because of the work of other people, and any value
+it has is borrowed from theirs.
+
+- **NSF NCAR / Climate and Global Dynamics Lab** and the **ESCOMP
+  community** for building and maintaining
+  [ESCOMP/CESM](https://github.com/ESCOMP/CESM), the CIME case-control
+  system, the public Sphinx documentation, and the coupled-modeling
+  framework this skill teaches users to drive.
+- The **CMEPS mediator** developers (NCAR + NOAA) for the coupling
+  architecture this skill routes through.
+- The maintainers of every component model that ships inside a CESM
+  configuration: CAM, CTSM, MOM6, CICE, MOSART, RTM, WACCM, WACCM-X.
+  Each has its own sibling skill that this one routes into.
+- **Zesen Huang** for [laps-skill](https://github.com/huangzesen/laps-skill),
+  the progressive-disclosure layout this repo borrows.
+
+Any errors, oversimplifications, or out-of-date claims in this skill are the
+skill author's responsibility, not the upstream community's. This is a
+scaffold; operational depth is being filled in iteratively.
+
 ## License
 
 MIT (skill content). The CESM code itself is governed by its own license; see https://github.com/ESCOMP/CESM/blob/main/LICENSE.txt.
