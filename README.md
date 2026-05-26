@@ -6,6 +6,15 @@ A progressive-disclosure skill for the [Community Earth System Model](https://gi
 > **Skill author:** Koutian Wu (ktwu01@gmail.com)
 > **Skill version:** 0.1.0-scaffold
 
+> ⚠️ **Disclaimer — please read before using this skill.**
+> This skill is **not a gold-standard reference**. It is a helper that lowers
+> the barrier for new users to **get their hands dirty** with the model. AI
+> agents (and the humans drafting this material) make mistakes; commands, file
+> paths, namelist options, and physics explanations here can be wrong,
+> incomplete, or out of date. **Always cross-check with the official model
+> documentation, the source code, and a human expert before trusting any
+> output for research, publication, or operational use.**
+
 ## What This Is
 
 A self-contained knowledge package that teaches AI agents (and humans) how to download, build, configure, run, customize, debug, and contribute to CESM as a coupled Earth-system framework. For deep work inside a single component (CAM, CTSM, MOM6, CICE, etc.), this skill routes into the relevant component-specific skill.
@@ -32,12 +41,12 @@ Progressive disclosure:
 
 ## Related skills in this org
 
-- [cam-skill](https://github.com/Earth-Space-Modeling-skills/cam-skill), atmosphere
-- [ctsm-skill](https://github.com/Earth-Space-Modeling-skills/ctsm-skill), land
-- [mom6-skill](https://github.com/Earth-Space-Modeling-skills/mom6-skill), ocean
-- [cice-skill](https://github.com/Earth-Space-Modeling-skills/cice-skill), sea ice
-- [waccm-skill](https://github.com/Earth-Space-Modeling-skills/waccm-skill), whole-atmosphere variant
-- [waccmx-skill](https://github.com/Earth-Space-Modeling-skills/waccmx-skill), extended whole-atmosphere variant
+- [cam-skill](https://github.com/earth-space-ai/cam-skill), atmosphere
+- [ctsm-skill](https://github.com/earth-space-ai/ctsm-skill), land
+- [mom6-skill](https://github.com/earth-space-ai/mom6-skill), ocean
+- [cice-skill](https://github.com/earth-space-ai/cice-skill), sea ice
+- [waccm-skill](https://github.com/earth-space-ai/waccm-skill), whole-atmosphere variant
+- [waccmx-skill](https://github.com/earth-space-ai/waccmx-skill), extended whole-atmosphere variant
 
 ## License
 
